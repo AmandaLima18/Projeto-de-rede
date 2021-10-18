@@ -1,0 +1,113 @@
+Especificações da LAN
+*********************
+
+EQUIPAMENTOS
+
+1. Sala de Equipamentos:
+    • 2 servidores
+        • SVR01 - DHCP - 192.168.10.5/24
+        • SVR02 - HTTP, DNS, E-mail - 192.168.10.6/24
+    • 2 estações PC
+        • PC01
+        • PC02
+    • 1 impressora
+        • PRN01 - 192.168.10.201/24
+    • 2 câmeras IP
+        • IPCAM01 - 192.168.30.101/24
+        • IPCAM02 - 192.168.30.102/24
+    • 1 WAP
+        • WAP01
+    • 1 Wireless LAN Controller - 192.168.0.10/24
+
+2. Atendimento
+    • 4 estações PC
+        • PC03
+        • PC04
+        • PC05
+        • PC06
+    • 2 impressoras
+        • PRN02 - 192.168.10.202/24
+        • PRN03 - 192.168.10.203/24
+    • 2 câmeras IP
+        • IPCAM03 - 192.168.30.103/24
+        • IPCAM04 - 192.168.30.104/24
+
+3. Vendas 1
+    • 2 estações PC
+        • PC07
+        • PC08
+    • 1 impressora
+        • PRN04 - 192.168.10.204/24
+    • 1 câmera IP
+        • IPCAM05 - 192.168.30.105/24
+
+4. Vendas 2
+    • 2 estações PC
+        • PC09
+        • PC10
+    • 1 câmera IP
+        • IPCAM06 - 192.168.30.106/24
+
+5. Call Center
+    • 4 estações PC
+        • PC11
+        • PC12
+        • PC13
+        • PC14
+    • 1 impressora
+        • PRN05 - 192.168.10.205/24
+    • 2 câmeras IP
+        • IPCAM07 - 192.168.30.107/24
+        • IPCAM08 - 192.168.30.108/24
+
+6. Sala de Reuniões
+    • 2 estações PC
+        • PC15
+        • PC16
+    • 2 câmeras IP
+        • IPCAM09 - 192.168.30.109/24
+        • IPCAM10 - 192.168.30.110/24
+    • 1 WAP
+        • WAP02
+
+7. Corredores
+    • 4 câmeras IP
+        • IPCAM11 - 192.168.30.111/24
+        • IPCAM12 - 192.168.30.112/24
+        • IPCAM13 - 192.168.30.113/24
+        • IPCAM14 - 192.168.30.114/24
+    • 1 WAP
+        • WAP03
+
+8. Entradas (parte externa)
+    • 2 câmeras IP
+        • IPCAM15 - 192.168.30.115/24
+        • IPCAM16 - 192.168.30.116/24
+
+OBSERVAÇÕES:
+
+    • Configuração IPv4.
+    • Câmeras IP, impressoras e servidores tem IP fixo.
+    • Estações PC recebem IP via DHCP.
+
+LISTA DE ATIVOS:
+
+    • 02 servidores de rede
+    • 16 estações PC
+    • 05 impressoras de rede
+    • 03 wireless access point
+    • 16 câmeras IP
+    • 03 switches 24 portas
+    • 01 Wireless LAN Controller
+
+LISTA DE VLANS
+
+    • 1 - Administrativa
+    • 10 - Colaboradores
+        • Estações PC
+        • Impressoras
+    • 20 - WiFiColaboradores
+        • WAP01, WAP02
+    • 30 - SegurancaIP
+        • Câmeras IP
+    • 40 - WiFiVisitantes

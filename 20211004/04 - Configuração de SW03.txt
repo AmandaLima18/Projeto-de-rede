@@ -1,0 +1,88 @@
+! --------------------
+! Configuração de SW03
+! --------------------
+
+! Incialização
+exit
+exit
+exit
+
+enable
+configure terminal
+
+! Configurar nome do dispositivo
+	hostname SW03
+	exit
+	
+! Configurar VLAN
+	vlan database
+	
+! VTP Client
+	vtp client
+	vtp domain Empresa
+	vtp password 12345
+	exit
+	
+! Configuração das interfaces
+configure terminal
+
+! Desativa todas as interfaces
+	interface range FastEthernet0/1 - 24
+		shutdown
+		exit
+
+	interface range GigabitEthernet0/1 -2
+		shutdown
+		exit
+
+! Porta trunk
+	interface GigabitEthernet0/1
+		switchport trunk encapsulation dot1q
+		switchport mode trunk
+		no shutdown
+		exit
+	
+! VLAN 10
+	interface range FastEthernet0/1 - 5
+		switchport access vlan 10
+		no shutdown
+		exit
+
+	interface range FastEthernet0/11 - 12
+		switchport access vlan 10
+		no shutdown
+		exit
+		
+! VLAN 20
+	interface FastEthernet0/8
+		switchport access vlan 20
+		no shutdown
+		exit
+		
+! VLAN 30		
+	interface range FastEthernet0/6 - 7
+		switchport access vlan 30
+		no shutdown
+		exit
+		
+	interface range FastEthernet0/9 - 10
+		switchport access vlan 30
+		no shutdown
+		exit
+
+	interface range FastEthernet0/13 - 14
+		switchport access vlan 30
+		no shutdown
+		exit
+		
+! VLAN 40
+	interface FastEthernet0/15
+		switchport access vlan 40
+		no shutdown
+		exit
+
+exit
+
+! Salva configurações
+copy running-config startup-config
+
