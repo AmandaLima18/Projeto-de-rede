@@ -1,0 +1,179 @@
+Implementando uma infraestrutura VoIP
+Voice Over Internet Protocol.
+
+Case
+
+	Como responsável pelo projeto da rede corporativa, o cliente solicitou recentemente, a troca da rede de telefoneia convencional por uma telefonia VoIP (pesquise sobre).
+	
+	Todos os ambientes vão receber terminais VoIP e esses, serão conectados à infraestrutura IP já existente.
+	
+Configurações VoIP
+
+	• Máximo de terminais VoIP previstos: 20
+	• VLAN da rede VoIP: vlan 50 name VoIP
+	• Endereçamento: 192.168.50.0/24
+	• Gateway: 192.168.50.1
+	• IP dos terminais (DHCP): 192.168.50.11 ~ 192.168.50.199
+	• Numero dos ramais terminais VoIP: 54001 ~ 54020
+
+Preparando:
+
+	• Utilizaremos um roteador extra, somente para as tarefas de VoIP, RT02	
+		• Localizado na "Sala de Equipamentos"
+		• Deve ser um modelo 2811 ou outro, compatível com VoIP
+	• Configurações de RT02 (comentadas):
+	
+! ********************* !
+! Configurações em RT02 !
+! ********************* !
+
+! Inicialização
+
+exit
+
+exit
+
+exit
+
+enable
+configure terminal
+
+! Configurar nome do dispositivo
+	hostname RT02
+	
+! Liga interface FastEthernet0/0, conectada à SW01
+	interface FastEthernet0/0
+		no ip address
+		duplex auto
+		speed auto
+		no shutdown
+		exit
+
+! Interface virtual da VLAN 50 - VoIP
+	interface FastEthernet0/0.50
+		encapsulation dot1Q 50
+		ip address 192.168.50.1 255.255.255.0
+		no shutdown
+		exit
+
+! DHCP do VoIP
+ip dhcp pool VOIP
+	network 192.168.50.0 255.255.255.0
+	default-router 192.168.50.1
+	option 150 ip 192.168.50.1
+	exit
+	
+! Endereços reservados, não usados pelo DHCP
+	ip dhcp excluded-address 192.168.50.1 192.168.50.10
+	ip dhcp excluded-address 192.168.50.200 192.168.50.254	
+	
+! Configuração dos terminais
+	telephony-service
+	max-ephones 20
+	max-dn 20
+	ip source-address 192.168.50.1 port 2000
+	auto assign 4 to 6
+	auto assign 1 to 5
+	exit
+	
+! Lista de números
+	ephone-dn 1
+		number 54001
+		exit
+
+	ephone-dn 2
+		number 54002
+		exit
+
+	ephone-dn 3
+		number 54003
+		exit
+
+	ephone-dn 4
+		number 54004
+		exit
+
+	ephone-dn 5
+		number 54005
+		exit
+
+	ephone-dn 6
+		number 54006
+		exit
+		
+! Adicione outros terminais conforme a demanda. Limite de 20...
+	
+exit
+
+! Salva configurações
+copy running-config startup-config
+
+exit
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+! ********************* !
+! Configurações em SW01 !
+! ********************* !
+
+exit
+
+exit
+
+exit
+
+enable
+
+vlan database
+
+vlan 50 name VoIP
+
+exit
+
+configure terminal
+
+! Trunk para roteador de VoIP
+interface GigabitEthernet1/0/1
+	switchport trunk encapsulation dot1q
+	switchport mode trunk
+	no shutdown
+	exit
+
+! VoIP01 conectado diretamente - 54002
+interface GigabitEthernet1/0/4
+	switchport mode access
+	switchport voice vlan 50
+	spanning-tree portfast
+	no shutdown
+	exit
+
+! VoIP02 conectado diretamente - 54001
+interface GigabitEthernet1/0/13
+	switchport mode access
+	switchport voice vlan 50
+	spanning-tree portfast
+	no shutdown
+	exit
+
+exit
+
+! Salva configurações
+copy running-config startup-config
+
+exit
+ 
+ 
+ 
+! ***************************** !
+! Fim das Configurações em SW01 !
+! ***************************** ! 
+
+
